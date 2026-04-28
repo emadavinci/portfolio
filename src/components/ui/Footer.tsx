@@ -4,7 +4,7 @@ export default function Footer() {
     <footer className="border-t border-[var(--border)] py-8 mt-20">
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-2">
         <p className="text-sm text-[var(--muted)]">
-          © {new Date().getFullYear()} Emanuel. Todos los derechos reservados.
+          © {new Date().getFullYear()} Emanuel Gomez. Todos los derechos reservados.
         </p>
         <p className="text-sm text-[var(--muted)]">
           Hecho con Next.js + TypeScript

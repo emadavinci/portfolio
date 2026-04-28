@@ -25,7 +25,7 @@ export default function Navbar() {
     }`}>
       <nav className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="#hero" className="text-lg tracking-tight font-normal" style={{ fontFamily: "var(--font-serif), serif" }}>
-          Emanuel<span style={{ color: "var(--accent)" }}>.</span>
+          Emanuel Gomez<span style={{ color: "var(--accent)" }}>.</span>
         </Link>
 
         <ul className="hidden md:flex gap-8">
