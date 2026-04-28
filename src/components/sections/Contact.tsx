@@ -17,13 +17,22 @@ export default function Contact() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    console.log(data);
-    setSent(true);
-    setLoading(false);
-    reset();
-  };
+  setLoading(true);
+  try {
+    const res = await fetch("https://formspree.io/f/mwvagqad", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) {
+      setSent(true);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  setLoading(false);
+  reset();
+};
 
   return (
     <section id="contact" className="max-w-5xl mx-auto px-6 py-24">
