@@ -1,5 +1,3 @@
-// src/types/index.ts
-
 export interface Project {
   id: string;
   title: string;
@@ -8,6 +6,7 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   type: "dev" | "qa" | "fullstack";
+  screenshots?: string[];
 }
 
 export interface Skill {

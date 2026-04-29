@@ -1,4 +1,3 @@
-// src/data/projects.ts
 import { Project } from "@/types";
 
 export const projects: Project[] = [
@@ -20,5 +19,13 @@ export const projects: Project[] = [
     tags: ["React Native", "Expo", "Firebase"],
     githubUrl: "https://github.com/emadavinci/MobileBolsones",
     type: "fullstack",
+    screenshots: [
+      "/screenshots/mobile-login.jpeg",
+      "/screenshots/mobile-dashboard-voluntario.jpeg",
+      "/screenshots/mobile-mensajes.jpeg",
+      "/screenshots/mobile-dashboard-admin.jpeg",
+      "/screenshots/mobile-asistencia.jpeg",
+      "/screenshots/mobile-registro.jpeg",
+    ],
   },
 ];

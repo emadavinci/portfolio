@@ -75,6 +75,20 @@ function ProjectCard({ project }: { project: Project }) {
           </span>
         ))}
       </div>
+
+      {project.screenshots && (
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
+          {project.screenshots.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={`Screenshot ${i + 1}`}
+              className="h-40 w-auto rounded-sm flex-shrink-0 border border-[var(--border)]"
+            />
+          ))}
+        </div>
+      )}
+
       <div className="flex gap-4">
         {project.githubUrl && (
           <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
