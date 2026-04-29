@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { projects } from "@/data/projects";
 import { Project } from "@/types";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
@@ -63,6 +63,17 @@ function ProjectCard({ project }: { project: Project }) {
   const prev = () => setCurrentIndex((i) => (i === 0 ? project.screenshots!.length - 1 : i - 1));
   const next = () => setCurrentIndex((i) => (i === project.screenshots!.length - 1 ? 0 : i + 1));
 
+  useEffect(() => {
+    if (!modalOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalOpen(false);
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [modalOpen, currentIndex]);
+
   return (
     <>
       <div className="border border-[var(--border)] p-6 hover:border-[var(--text)] transition-all duration-300 flex flex-col">
@@ -83,21 +94,20 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
 
-        {/* Preview de la primera screenshot */}
         {project.screenshots && (
           <div
-            className="relative mb-6 cursor-pointer group overflow-hidden"
+            className="relative mb-6 cursor-pointer group overflow-hidden w-32"
             onClick={() => { setCurrentIndex(0); setModalOpen(true); }}
           >
             <img
               src={project.screenshots[0]}
               alt="Preview"
-              className="w-32 h-auto rounded-sm border border-[var(--border)] group-hover:opacity-80 transition-opacity"
+              className="w-full h-auto rounded-sm border border-[var(--border)] group-hover:opacity-60 transition-opacity"
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <span className="text-xs font-medium bg-[var(--text)] text-[var(--bg)] px-3 py-1.5 flex items-center gap-1.5">
-                <Images size={12} />
-                Ver {project.screenshots.length} fotos
+              <span className="text-xs font-medium bg-[var(--text)] text-[var(--bg)] px-2 py-1 flex items-center gap-1">
+                <Images size={11} />
+                {project.screenshots.length} fotos
               </span>
             </div>
           </div>
@@ -123,37 +133,54 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
 
-      {/* Modal */}
       {modalOpen && project.screenshots && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ backgroundColor: "rgba(0,0,0,0.9)" }}
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ backgroundColor: "rgba(0,0,0,0.85)" }}
           onClick={() => setModalOpen(false)}
         >
-          <div className="relative max-w-sm w-full" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative flex flex-col items-center px-4"
+            style={{ maxHeight: "90vh" }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setModalOpen(false)}
               className="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
 
             <img
               src={project.screenshots[currentIndex]}
               alt={`Screenshot ${currentIndex + 1}`}
-              className="w-full rounded-sm"
+              style={{ maxHeight: "70vh", maxWidth: "280px", width: "100%" }}
+              className="rounded-sm object-contain"
             />
 
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-8 mt-5">
               <button onClick={prev} className="text-white opacity-70 hover:opacity-100 transition-opacity">
                 <ChevronLeft size={28} />
               </button>
-              <span className="text-white text-xs opacity-50">
+              <span className="text-white text-xs opacity-50 w-12 text-center">
                 {currentIndex + 1} / {project.screenshots.length}
               </span>
               <button onClick={next} className="text-white opacity-70 hover:opacity-100 transition-opacity">
                 <ChevronRight size={28} />
               </button>
+            </div>
+
+            <div className="flex gap-2 mt-4">
+              {project.screenshots.map((src, i) => (
+                <button key={i} onClick={() => setCurrentIndex(i)}>
+                  <img
+                    src={src}
+                    alt={`Thumb ${i + 1}`}
+                    style={{ height: "48px", width: "auto" }}
+                    className={`rounded-sm border-2 transition-all ${i === currentIndex ? "border-white opacity-100" : "border-transparent opacity-40 hover:opacity-70"}`}
+                  />
+                </button>
+              ))}
             </div>
           </div>
         </div>
