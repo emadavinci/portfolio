@@ -34,7 +34,7 @@ export const projects: Project[] = [
     description:
       "Clon de Trello con autenticación Google, tableros personalizables, columnas y cards con drag & drop en tiempo real. Datos persistidos en Firebase Firestore.",
     tags: ["Next.js", "TypeScript", "Firebase", "dnd-kit", "Tailwind CSS"],
-    githubUrl: "https://github.com/emadavinci/trello-clone",
+    githubUrl: "https://github.com/emadavinci/trello-para-portfolio",
     liveUrl: "https://trello-para-portfolio.vercel.app",
     type: "fullstack",
   },
